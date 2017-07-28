@@ -1,0 +1,51 @@
+$baseFontSize = 100
+$baseWidth = 1080
+// 1080设计搞
+px1080(px) {
+	(px/$baseFontSize)*1rem
+}
+// 720设计搞
+px720(px){ 
+	(px*$baseWidth/720/$baseFontSize)*1rem 
+}
+// 640设计搞
+px640(px){ 
+	(px*$baseWidth/640/$baseFontSize)*1rem 
+}
+
+vendor(prop, args) {
+	-webkit-{prop}: args;
+	// -moz-{prop}: args;
+	// -o-{prop}: args;
+	// -ms-{prop}: args;
+	{prop}: args;
+}
+text-ellipsis() {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+multi-text-ellipsis(line) {
+	display-box();
+	vendor(line-clamp, line);
+	vendor(box-orient, vertical);
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+// flex布局
+display-flex() { 
+	display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6 */ 
+	display: -moz-box; /* OLD - Firefox 19- (buggy but mostly works) */ 
+	display: -ms-flexbox; /* TWEENER - IE 10 */ 
+	display: -webkit-flex; /* NEW - Chrome */ 
+	display: flex; /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+// flex item拉伸
+flex-grow(num) {
+	-webkit-box-flex: num;
+	-moz-flex-grow: num;
+	-webkit-flex-grow: num;
+	flex-grow: num;
+}

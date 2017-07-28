@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>积分商城</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="/dist/libs/reset.min.css">
+
+    <!-- 在生产环境时显示
+    <link rel="stylesheet" type="text/css" href="/dist/commons/commons/styles.css">
+    <link rel="stylesheet" type="text/css" href="/dist/pointmall/pshop/styles.css"> -->
+</head>
+<body>
+    <section id="slider">
+        <slick ref="slick" class="slider" :options="slickOptions">
+            <a href="#"><img src="/images/creditimg1.jpg"></a>
+            <a href="#"><img src="/images/creditimg1.jpg"></a>
+            <a href="#"><img src="/images/creditimg1.jpg"></a>
+        </slick>
+    </section>
+
+    <section class="menu" id="menu">
+        <a href="#">
+            <span class="icon icon-draw"></span>每日抽奖
+        </a>
+        <a href="#">
+            <span class="icon icon-credit"></span>赚积分
+        </a>
+        <a href="#">
+            <span class="icon icon-addr"></span>收货地址
+        </a>
+        <a href="#">
+            <span class="icon icon-record"></span>兑换记录
+        </a>
+    </section>
+
+    <section class="news bb">
+        <div class="news-list">
+            <ul>
+                <li>恭喜艾克里里获得了金立S9!</li>
+                <li>恭喜fifi获得了蓝牙音箱!</li>
+                <li>恭喜隐形的翅膀成功兑换M2017真皮手包礼包</li>
+            </ul> 
+        </div>
+    </section>
+
+    <div id="J_listWrap">
+        <router-view></router-view>
+    </div>
+
+    <script src="/dist/commons/bundle.js"></script>
+    <script src="/dist/pointmall/pshop.js"></script>
+
+    </body>
+</html>

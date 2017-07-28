@@ -1,0 +1,116 @@
+@import "./mixins.styl";
+html,body,p,a,span,button,ul,li{margin:0;padding:0;box-sizing:border-box}
+
+body { 
+	font-family: sans-serif;
+	font-size: px1080(42);
+	line-height: 1.5;
+	color:#323232;    
+	background-color: #eaeaea;
+}
+a, a:hover, a:visited {
+	text-decoration: none;
+	color:#323232; 
+	outline: none; 
+}
+.bb{ 
+	position: relative; 
+	&:after{
+		content: "";
+		display: block;
+		width: 300%;
+		height: 2px;
+		position:absolute;
+		left: -100%;
+		bottom: 0;
+		vendor(transform, scale(.333));
+		vendor(transform-origin, center bottom);
+		background-color: #e2e2e2;
+	}
+}
+.fade-enter-active, .fade-leave-active {  
+	transition: opacity .2s
+}
+.fade-enter, .fade-leave-active {  
+	opacity: 0
+}
+.toast-container {
+	width: 100%;
+	z-index: 9999;
+	position: fixed;
+	bottom:px1080(198);
+	text-align:center;
+	.toast-item {
+		width:auto;
+		height: px1080(132);
+		line-height:px1080(132);
+		background: rgba(0,0,0,.6);
+	    opacity: 1;
+	    vendor(border-radius,px1080(66));
+		color: #fff;
+		font-size: px1080(48);
+		display: inline-block;
+		padding: 0 px1080(69)
+	}
+}
+.dialog-container{
+	width:100%;
+	height:auto;
+	position:fixed;
+	left:0;
+	bottom:-50%;
+	background-color:#fafafa;
+	padding:px1080(48) 0 0;
+	font-size:px1080(48);
+	color:#323232;
+	z-index:100;
+	.dialog-item{
+		margin:px1080(30) px1080(60) px1080(60);
+		line-height:1.6;
+		.addr{
+			color:#969696;
+			font-size:px1080(42);
+			margin-top:px1080(30);
+		}
+	}
+	.dialog-btn-wrap{
+		display-flex();
+		justify-content:space-around;
+		margin-top:px1080(30);
+		width:100%;
+		height:px1080(156);
+		background-color:#f5f5f5;
+		flex-grow:1;
+	}
+	.dialog-title{
+		color:#ff9000;
+		font-size:px1080(54);
+		padding:0 px1080(60);
+		line-height:1.8
+	}
+	.dialog-btn{
+		height:px1080(156);
+		line-height:px1080(156);
+		text-align:center;
+		color:#323232;
+		&.dialog-btn-p{
+			color:#ff9000
+		
+		}
+
+	}
+}
+.overlay-wrap{
+	width:100%;
+	height:100%;
+	background:rgba(0,0,0,.3);
+	position:fixed;
+	left:0;
+	top:0;
+	z-index:99;
+
+}
+
+
+
+

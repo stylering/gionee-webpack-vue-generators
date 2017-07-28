@@ -1,0 +1,170 @@
+/**
+ author: 段文涛，邓頔
+ date: 2017-04-19
+ version: 0.0.1
+
+ * =================eslint错误级别=================
+ * "off" or 0 - 关闭规则
+ * "warn" or 1 - 将规则视为一个警告（不会影响退出码）
+ * "error" or 2 - 将规则视为一个错误 (退出码为1)
+ */
+{
+  "parser":"espree", //ESLint 默认使用Espree作为其解析器  babel-eslint
+  //"extends": "eslint:recommended", //eslint:recommended 继承eslint中推荐的规则  http: //eslint.cn/docs/rules/下带√的规则会默认打开  书写自己的规则条件可以覆盖  airbnb
+  "plugins": [
+    "react" //使用 plugins ，其中包含插件名字的列表。插件名称可以省略 eslint-plugin- 前缀
+  ],
+  "parserOptions": { //这是个对象，表示你想使用的额外的语言特性
+    "ecmaVersion": 6, //你想要使用的 ECMAScript 版本
+    "sourceType": "module", //设置为 "script" (默认) 或 "module"
+    "ecmaFeatures": {
+      "globalReturn ":true, //允许在全局作用域下使用 return 语句
+      "impliedStrict":true, //impliedStrict - 启用全局 strict mode (如果 ecmaVersion 是 5 或更高)
+      "experimentalObjectRestSpread": true, //启用对实验性的 object rest/spread properties 的支持
+      "jsx": true //启用 JSX
+    }
+  },
+  "env": { //环境定义了预定义的全局变量
+    "browser": true, //browser 全局变量
+    "commonjs": true, // CommonJS 全局变量和 CommonJS 作用域
+    "es6": true, //支持除模块外所有 ECMAScript 6 特性
+    "node":true //Node.js 全局变量和 Node.js 作用域
+  },
+  "globals": {
+    "var1": true,  //变量可以被重写（读写）
+    "var2": false  //变量不应被重写（只读）
+  },
+  "rules": { //eslint所有的规则默认都是禁用的
+    "no-cond-assign":["error","always"], //禁止在条件语句中出现赋值操作符,如:if (user.jobTitle = "manager") {}
+    "no-console":["warn",{"allow": ["warn", "error"]}], //allow是个字符串数组，包含允许使用的console 对象的方法
+    "no-constant-condition":["error",{ "checkLoops": false }], //禁止在条件中使用常量表达式 如: if (false) {doSomethingUnfinished();}
+    "no-control-regex": "error",  //禁止在正则表达式中使用控制字符(特殊字符、不可见的字符) 如:var pattern1 = /\x1f/;
+    "no-debugger":"error", //禁用 debugger , debugger 语句用于告诉 JavaScript 执行环境停止执行并在代码的当前位置启动调试器。 如:function isTruthy(x) { debugger; return Boolean(x);}
+    "no-dupe-args":"error", //禁止在 function 定义中出现重复的参数 如:function foo(a, b, a) {}
+    "no-dupe-keys":"error", //禁止对象字面量中出现重复的 key  如:var foo = {bar: "baz",bar: "qux"};
+    "no-duplicate-case":"error", //禁止出现重复的 case 标签  如:switch (a) { case 1: break; case 1: break;}
+    "no-empty":"warn", //给出警告 , 禁止出现空语句块  如:if (foo) {}
+    "no-ex-assign": "error",  //禁止对 catch 子句中的异常重新赋值 如:try {} catch (e) {e = 10;}
+    "no-extra-boolean-cast":"warn",  //给出警告，禁止不必要的布尔类型转换 如:if (Boolean(foo)) { // ...}
+    "no-extra-parens": "off",  //关闭规则，--fix 禁止冗余的括号 如: ((function foo() {return 1;})())
+    "no-extra-semi":"warn", //给出警告，禁止不必要的分号 如:var x = 5;;
+    "no-func-assign":"warn", //禁止对 function 声明重新赋值 如:function foo() {}  foo = bar;
+    "no-inner-declarations":"warn",  //给出警告，禁止在嵌套的语句块中出现变量或 function 声明 如: if (test) {function doSomethingElse () { }}
+    "no-invalid-regexp":"warn",  //给出警告，禁止在 RegExp 构造函数中出现无效的正则表达式 如: RegExp('[')
+    "no-irregular-whitespace":["warn", { "skipTemplates": true }],  //给出警告，禁止不规则的空白,"skipStrings": true (默认) 允许在字符串字面量中出现任何空白字符 如: function thing() /*<NBSP>*/{return 'test';}
+    "no-obj-calls": "error",  //禁止将全局对象当作函数进行调用 如: var math = Math();
+    "no-prototype-builtins": "off",  //关闭规则，禁止直接使用 Object.prototypes 的内置属性 如: var hasBarProperty = foo.hasOwnProperty("bar");
+    "no-regex-spaces": "warn",  //给出警告，禁止正则表达式字面量中出现多个空格 如: var re = /foo   bar/;
+    "no-sparse-arrays": "warn",  //给出警告，禁用稀疏数组 如:var items = [,,];
+    "no-template-curly-in-string": "warn",  //给出警告，禁止在普通字符串中使用 ${variable} 插入变量 如:"Hello ${name}!";
+    "no-unexpected-multiline": "warn",  //给出警告，禁止使用令人困惑的多行表达式 如:var foo = bar  (1 || 2).baz();
+    "no-unreachable" : "error",  //禁止在 return、throw、continue 和 break 语句后出现不可达代码 (no-unreachable) 如: function fn() {x = 1; return x; x = 3;  // this will never execute}
+    "no-unsafe-finally": "error",  //禁止在 finally 语句块中出现控制流语句, JavaScript 暂停 try 和 catch 语句块中的控制流语句，直到 finally 语句块执行完毕。如: (() => {try {throw new Error("Try");  // error is thrown but suspended until finally block ends} finally {return 3;  // 3 is returned before the error is thrown, which we did not expect}})();  > 3
+    "no-unsafe-negation": "error",  // --fix 禁止否定符号在变量左侧 如: if (!key in object) {}
+    "use-isnan": "error",  //要求调用 isNaN()检查 NaN 如: if (foo == NaN) {}
+    "valid-jsdoc": "warn",  //给出警告，强制使用有效的 JSDoc 注释
+    "valid-typeof": "error",  //强制 typeof 表达式与有效的字符串进行比较 如: typeof foo === "strnig"
+
+    "accessor-pairs": "off",  //强制getter/setter成对出现在对象中
+    "array-callback-return": "off",  //强制数组方法的回调函数中有 return 语句
+    "block-scoped-var": "off",  //把 var 语句看作是在块级作用域范围之内
+    "curly":"warn", //给出warn警告，强制所有控制语句使用一致的括号风格
+    "eqeqeq":"error", //要求使用 === 和 !==
+    "no-case-declarations":"warn", //给出警告,禁止在 case 或 default 子句中出现词法声明 如: switch (foo) {case 1:let x = 1; break;}
+    "no-empty-function":"error", //禁止出现空函数
+    "no-empty-pattern": "warn",  //给出警告，禁止使用空解构模式 如: var {} = foo;
+    "no-fallthrough": "warn",  //给出警告，禁止 case 语句落空 无break
+    "no-octal": "error",  //禁用八进制字面量 如: var num = 071;   // 57
+    "no-redeclare": "error",  //禁止重新声明变量 如: var a = 3; var a = 10;
+    "no-self-assign": "error", //禁止自身赋值  如: foo = foo;
+    "no-self-compare":"error", //禁止自身比较 如: if (x === x) { //...}
+    "no-throw-literal":"error", //禁止抛出异常字面量 如: throw "error"; throw 0; throw "an " + err;
+    "no-unused-labels": "warn",  //禁用未使用过的标签 如: A: var foo = 0;
+    "no-useless-concat":"warn", //给出警告，禁止不必要的字符串字面量或模板字面量的连接 如: var a = `some` + `string`; var a = '1' + `0`;
+    "no-useless-escape":"warn", //给出警告，禁用不必要的转义字符 如: "\'";  '\"';
+    "no-with":"error", //禁用 with 语句  with (point) {r = Math.sqrt(x * x + y * y);  // is r a member of point?}
+    "radix":["warn","as-needed"], //要求必须有基数  "as-needed"禁止提供基数"warn"0 如: var num = parseInt("071", 10); var num = parseInt("071", 8);
+
+    "no-delete-var":"error", //禁止删除变量 如: var x; delete x;
+    "no-shadow-restricted-names":"error", //禁止覆盖受限制的标识符 如: function NaN(){};  var undefined;
+    "no-undef": "warn",  //禁用未声明的变量 如: b = 10;
+    "no-unused-vars":"warn", //给出警告，禁止未使用过的变量 如: 声明了，但是没用到
+    "global-require":"error", //要求 require() 出现在顶层模块作用域中 如: var fs = require("fs");
+    "handle-callback-err":"warn", //给出警告,要求回调函数中有容错处理  如: function loadData (err, data) { if (err) { console.log(err.stack); } doSomething();}
+    "computed-property-spacing":["error","never"], //禁止或强制在计算属性中使用空格  如: obj[foo] obj['foo']
+    "no-mixed-spaces-and-tabs": "warn",  //禁止使用 空格 和 tab 混合缩进
+
+    "arrow-parens":["warn","as-needed"], //要求箭头函数的参数使用圆括号 () => {}; a => {}; (a, b, c) => a;
+    "constructor-super": "warn",  //验证构造函数中 super() 的调用
+    "no-class-assign":"error", //不允许修改类声明的变量 如: class A { } A = 0;
+    "no-const-assign":"error", //不允许改变用const声明的变量 const a = 0; ++a;
+    "no-dupe-class-members":"error", //不允许类成员中有重复的名称 class Foo {  bar() { }  bar() { } }
+    "no-new-symbol": "error",  //Symbol对象不能使用 new 操作符 如: var foo = new Symbol("foo");
+    "no-this-before-super":"error", //在构造函数中禁止在调用super()之前使用this或super class A extends B { constructor() {super();this.a = 0;  // OK, this is after `super()`. }}
+    "no-var":"warn", //给出警告,要求使用 let 或 const 而不是 var
+    "prefer-template":"warn", //给出警告,建议使用模板而非字符串连接  var str = "Hello, " + name + "!";
+    "require-yield":"error", //要求 generator 函数内有 yield function* foo() { yield 5; return 10;}
+
+    "react/display-name":["off", { "ignoreTranspilerName": false }],  //定义React组件时避免丢失 display-name 属性 如: var Hello = React.createClass({  displayName: 'Hello', })
+    "react/forbid-component-props": ["warn", { "forbid": ["className","style"] }], //定义React组件上的properties禁止是标签上的properties 如: <Hello className='foo' />  <div className='foo' />
+    "react/forbid-elements":"off",  //定义React组件时,禁止的某些元素的名称
+    "react/forbid-prop-types":"off", //定义React组件时,禁止的某些元素的prop-types的验证
+    "react/forbid-foreign-prop-types":"off", //定义React组件时,禁止引入外部元素的propTypes
+    "react/no-array-index-key":"warn", //重复元素时，要用数据中的唯一标识，而不是数组索引
+    "react/no-children-prop":"error", //定义React组件时,禁止用children作为props进行传递 如: <MyComponent children={<AnotherComponent />} />
+    "react/no-danger":"error", //禁止html标签使用dangerouslySetInnerHTML属性
+    "react/no-danger-with-children":"error", //定义React组件时dangerouslySetInnerHTML和Children禁止一起使用
+    "react/no-deprecated":"warn", //禁止使用过期的方法 React(DOM).render(<MyComponent />, root);
+    "react/no-did-mount-set-state":"error", //定义React组件时，禁止在componentDidMount中设置setState
+    "react/no-did-update-set-state":"error", //定义React组件时，禁止在componentDidUpdate中设置setState
+    "react/no-direct-mutation-state":"warn", //定义React组件时，禁止this.state.name = this.props.name.toUpperCase(); 要this.setState({ name: this.props.name.toUpperCase();  });
+    "react/no-find-dom-node":"warn", //定义React组件时，禁止使用过时的findDOMNode方法，建议用refs的callback形式替代
+    "react/no-is-mounted":"error", //在用es6 class的形式定义组件时，isMounted方法不可用，而且该方法也即将过时
+    "react/no-multi-comp":["warn",{ "ignoreStateless": true}], //建议每一个文件定义一个React组件，stateless形式的函数除外(即可以定义多个)
+    "react/no-render-return-value":"error", //定义ReactDOM.render(<App />, document.body)时，不应该使用其返回值，一定要在渲染之后执行一些方法，可使用第三个参数ReactDOM.render(<App />, document.body, doSomethingWithInst);
+    "react/no-set-state":"off", //禁止使用setState方法
+    "react/no-string-refs":"off", //禁止ref属性中书写字符串
+    "react/no-unescaped-entities":"warn", //对于真的要书写特殊字符>,可以&gt转义字符;或则{'>'}
+    "react/no-unknown-property":"error", //jsx形式的class要写成className,label中的for要写成htmlFor
+    "react/no-unused-prop-types":"warn", //在组件的propTypes定义了某个变量是必须的，但是该组件并没有使用该变量
+    //"react/no-will-update-set-state":["error","disallow-in-func"], //定义React组件时，禁止在componentWillUpdate中设置setState
+    "react/prefer-es6-class":"off", //定义React组件时，优先使用es6的形式来定义
+    "react/prefer-stateless-function":"off", //定义React组件时，优先使用无状态的纯函数的形式来定义
+    "react/prop-types":"off", //定义React的组件时，组件所需要的变量都在propTypes中声明
+    "react/react-in-jsx-scope":"error", //定义React组件时，要先引入react
+    "react/require-default-props":"off", //定义React组件时，默认需要定义组件的defaultProps
+    "react/require-optimization":"off", //定义React组件时，是不是必须要有shouldComponentUpdate方法
+    "react/require-render-return":"error", //在使用ES5和ES6方式定义React组件时，在render中需要写return
+    "react/self-closing-comp":["error",{"component": true,"html":false}], //组件没有children时应该自闭合 <Hello name="John" />;  <div className="content"></div>;
+    "react/sort-comp":"off", //定义React组件时，钩子方法要按照顺序来写
+    "react/sort-prop-types":"off", //定义React组件时，组件的propTypes的key值按照字母升序排列
+    "react/style-prop-object":"error", //定义React组件时，组件的style props需要一个对象的形式 如: <Hello style={{ color: "red" }} />
+    "react/void-dom-elements-no-children":"error", //自闭合的html标签不能写children  如: <br>Children</br>
+
+    //"react/display-name": ["warn", { "ignoreTranspilerName": true }],  //定义React组件时避免丢失 display-name 属性
+    "react/jsx-boolean-value": ["warn", "always"], // --fix 强制布尔属性标记属性值 var Hello = <Hello personal={true} />;
+    "react/jsx-closing-bracket-location":["warn", "tag-aligned"], // --fix 验证 JSX 关闭标签位置
+    "react/jsx-curly-spacing": ["off", "never"], //--fix 强制或禁止JSX属性值中花括号包含空格 如: <Hello name={ firstname } />;
+    "react/jsx-equals-spacing": ["off", "never"], //--fix 强制或禁止JSX属性中等号包含空格 如: <Hello name = {firstname} />;
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }], //限制文件的扩展名，包含 .js 和 .jsx
+    "react/jsx-first-prop-new-line":["off", "never"], //第一个属性的位置设置为新的一行
+    "react/jsx-handler-names": "off", //强制事件函数使用 handle 命名规则 如: <MyComponent onChange={this.handleChange} />
+    "react/jsx-indent": ["warn", "tab"], //--fix //验证 JSX 的缩进风格
+    "react/jsx-indent-props": ["warn", "tab"], //--fix //验证 JSX 属性的缩进风格
+    "react/jsx-key": "warn", // 在循环中，检测 key 属性
+    "react/jsx-max-props-per-line": "off", //JSX一行中限制的最大属性个数
+    "react/jsx-no-bind": "off", //在属性中不允许使用.bind或箭头函数
+    "react/jsx-no-comment-textnodes": "warn", //防止注释插入文本节点 如: return (<div>/* empty div */</div>);
+    "react/jsx-no-duplicate-props": "warn", //防止重复属性
+    "react/jsx-no-literals": "off", //避免使用未用大括号包装的字符串 如: var Hello = <div>test</div>;
+    "react/jsx-no-target-blank": "warn", //避免使用不安全的 target="_blank" 应添加 rel='noopener noreferrer' 属性
+    "react/jsx-no-undef": "error",  //JSX中禁止使用未声明的变量
+    "react/jsx-pascal-case": "off", //强制使用驼峰式命名
+    "react/jsx-sort-props": "off", //强制字母排序属性
+    "react/jsx-space-before-closing": ["off", "never"], //--fix 强制在JSX闭合符号前加空格
+    "react/jsx-tag-spacing": ["off", {"closingSlash": "never"}], //验证尖括号前后空格
+    "react/jsx-uses-react": "off", //避免 react 不正确的声明或未使用
+    "react/jsx-uses-vars" : "off", //避免 react 组件声明但未使用
+    "react/jsx-wrap-multilines": "off" // --fix 避免返回 JSX 时丢失括号 如: return <div><p>Hello {this.props.name}</p></div>;
+  }
+}
