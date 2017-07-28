@@ -30,4 +30,4 @@
 
 > 启动dev开发环境: npm run dev
 
-> 上线编译：npm run build
+> 上线编译：npm run dist
