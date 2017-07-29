@@ -32,12 +32,28 @@
 
 npm环境安装，windows下载node：下载地址：https://nodejs.org/en/
 
-下载gionee-webpack-vue-generators包到硬盘
+下载gionee-webpack-vue-generators包到硬盘	
 
-目录结构
+**开始运行**
 
 ```
-gionee-webpack-vue-generators // 工程目录
+// 进入gionee-webpack-vue-generators工程目录
+cd gionee-webpack-vue-generators
+// 初始化项目，安装依赖包
+npm install
+// 启动请求伪造假数据服务
+npm run mock
+// 开发环境运行
+npm run dev
+// 上线运行打包
+npm run dist
+// 访问首页
+http://localhost:9090
+```
+
+**工程目录**
+
+	gionee-webpack-vue-generators // 工程目录
 	cfg		// webpack配置
 		base.config.js				// webpack用到的公用配置文件
 		defaults.js					// 常量配置文件
@@ -75,102 +91,78 @@ gionee-webpack-vue-generators // 工程目录
 	.babellrc		// babel配置文件
 	server.js		// 应用启动server
 	webpack.config.js		// webpack配置文件
-	
-	
-```
-
-开始运行
-
-```
-// 进入gionee-webpack-vue-generators工程目录
-cd gionee-webpack-vue-generators
-// 初始化项目，安装依赖包
-npm install
-// 启动请求伪造假数据服务
-npm run mock
-// 开发环境运行
-npm run dev
-// 上线运行打包
-npm run dist
-// 访问首页
-http://localhost:9090
-```
-
 
 
 ## 多页面应用怎么分块
 
 多页面应用每个页面都有对应的一个js入口文件，页面只加载对应模块的js即可。
 
-- 把每个页面对应的模块打包为一个js。
+把每个页面对应的模块打包为一个js。
 
-  入口文件配置entry.config.js
+**入口文件配置entry.config.js**
 
-  ```
-  let defaults = require('./defaults');
-  let path = require('path');
-  let glob = require('glob');
-  let hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true'
+```
+let defaults = require('./defaults');
+let path = require('path');
+let glob = require('glob');
+let hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true'
 
-  let commonsDir = defaults.srcPath + '/commons';
-  let pagesDir = defaults.srcPath + '/pages';
+let commonsDir = defaults.srcPath + '/commons';
+let pagesDir = defaults.srcPath + '/pages';
 
-  let commonsInstance = new glob.Glob('**/*.js', {
-  	// 在commons目录里找
-  	cwd: commonsDir,
-  	// 这里不能异步，只能同步
-  	sync: true
-  })
-  let pagesInstance = new glob.Glob('*/*', {
-  	// 在pages目录里找
-  	cwd: pagesDir,
-  	// 这里不能异步，只能同步
-  	sync: true
-  })
+let commonsInstance = new glob.Glob('**/*.js', {
+	// 在commons目录里找
+	cwd: commonsDir,
+	// 这里不能异步，只能同步
+	sync: true
+})
+let pagesInstance = new glob.Glob('*/*', {
+	// 在pages目录里找
+	cwd: pagesDir,
+	// 这里不能异步，只能同步
+	sync: true
+})
 
-  // 获取commons目录下的所有js文件名[ 'adapterScreen.js', 'AndroidClient.js', 'areadata.js', 'buildStaticFile.js', 'config.js', 'dialog.js', 'toast.js', 'util.js' ]
-  let commonsArr = commonsInstance.found;
-  // 一个数组，形如['pointmall/detail', 'pointmall/draw', 'pointmall/record']
-  let pageArr = pagesInstance.found; 
-  ```
+// 获取commons目录下的所有js文件名[ 'adapterScreen.js', 'AndroidClient.js', 'areadata.js', 'buildStaticFile.js', 'config.js', 'dialog.js', 'toast.js', 'util.js' ]
+let commonsArr = commonsInstance.found;
+// 一个数组，形如['pointmall/detail', 'pointmall/draw', 'pointmall/record']
+let pageArr = pagesInstance.found; 
+```
+**打包后生成的目录结构对比**
 
-- 打包后生成的目录结构对比
+我们可以看到static中的页面模块与打包后的模块js是一一对应的。
 
-  我们可以看到static中的页面模块与打包后的模块js是一一对应的。
-
-  ```
-  // 页面模块
-  static					// 存放demo html的目录
-  	dynamic				// 模块
-  		index.html		// 子模块首页
-  	pointmall
-  		detail.html		// 子模块页面
-  		pshop.html		// 子模块页面
-  		
-  		
-  // 打包后生成的目录结构
-  dist				
-  	dynamic				// 页面模块
-  		index.css		// 子页面css
-  		index.css.map	// 子页面css sourcemap
-  		index.js		// 子页面对应的js
-  	pointmall			// 页面模块
-  		detail.css		// 子页面css
-  		detail.css.map	// 子页面css sourcemap
-  		detail.js		// 子页面对应的js
-  		pshop.css		// 子页面css
-  		pshop.css.map	// 子页面css sourcemap
-  		pshop.js		// 子页面对应的js
-  ```
-
-
+```
+// 页面模块
+static					// 存放demo html的目录
+	dynamic				// 模块
+		index.html		// 子模块首页
+	pointmall
+		detail.html		// 子模块页面
+		pshop.html		// 子模块页面
+		
+		
+// 打包后生成的目录结构
+dist				
+	dynamic				// 页面模块
+		index.css		// 子页面css
+		index.css.map	// 子页面css sourcemap
+		index.js		// 子页面对应的js
+	pointmall			// 页面模块
+		detail.css		// 子页面css
+		detail.css.map	// 子页面css sourcemap
+		detail.js		// 子页面对应的js
+		pshop.css		// 子页面css
+		pshop.css.map	// 子页面css sourcemap
+		pshop.js		// 子页面对应的js
+```
 
 
 ## 公共代码怎么样避免重复
 
 公用模块打包：我们使用了webpack的CommonsChunkPlugin插件，打包后的文件为bundle.js，这个js包含了webpack的入口代码、commons目录中的公用模块代码
 
-commons对应部分plugin.config.js
+**commons对应部分plugin.config.js**
 
 ```
 new webpack.optimize.CommonsChunkPlugin({
@@ -180,7 +172,7 @@ new webpack.optimize.CommonsChunkPlugin({
 }),
 ```
 
-公用模块打包后目录结构
+**公用模块打包后目录结构**
 
 ```
 // 打包后公用模块目录结构
@@ -197,37 +189,35 @@ dist
 
 ## 样式文件怎样处理
 
-- 使用预处理器编写css，这里以stylus作为举例
+使用预处理器编写css，这里以stylus作为举例
+
+**在dev环境下内联使用样式文件**
+
+```
+// cfg/module.config.js文件
+rules: [{
+	test: /\.styl$/,
+    loader: 'style-loader!css-loader!stylus-loader'
+}]
+```
+
+**在production环境使用了extract-text-webpack-plugin提取css，页面引用。**
+
+```
+// cfg/module.config.js文件
+rules: [{
+	test: /\.styl$/,
+    loader: ExtractTextPlugin.extract({
+    	fallback: 'style-loader', 
+    	use: 'css-loader?!stylus-loader'
+    })
+}]
+
+// cfg/plugins.config.js文件，提取样式文件
+new ExtractTextPlugin("[name].css")
+```
 
 
-- 在dev环境下内联使用样式文件
-
-  ```
-  // cfg/module.config.js文件
-  rules: [{
-  	test: /\.styl$/,
-      loader: 'style-loader!css-loader!stylus-loader'
-  }]
-  ```
-
-
-- 在production环境使用了extract-text-webpack-plugin提取css，页面引用。
-
-  ```
-  // cfg/module.config.js文件
-  rules: [{
-  	test: /\.styl$/,
-      loader: ExtractTextPlugin.extract({
-      	fallback: 'style-loader', 
-      	use: 'css-loader?!stylus-loader'
-      })
-  }]
-
-  // cfg/plugins.config.js文件，提取样式文件
-  new ExtractTextPlugin("[name].css")
-  ```
-
-  ​
 
 ## 图片是怎么处理的
 
@@ -275,7 +265,7 @@ import '!file-loader?name=libs/[name].[ext]!libs/reset.min.css';
 
 为了不依赖于后端开发，我们可以伪造请求数据，在这里使用了express+mockjs框架，express创建应用服务器、定义路由，mockjs自动伪装数据。
 
-启动应用
+**启动应用**
 
 ```
 // mock/mockserver.js文件
@@ -301,7 +291,7 @@ module.exports = function(app) {
 }
 ```
 
-伪造数据，在页面中只要访问http://localhost:port/auth/pshop/goods.List.do就能请求到数据了
+**伪造数据，在页面中只要访问http://localhost:port/auth/pshop/goods.List.do就能请求到数据了**
 
 ```
 // mock/pshop.js文件
@@ -345,7 +335,7 @@ Mock.Random api可以根据规则生成图片地址、布尔值、字符串等�
 
 热加载早已是前端开发必备了，可以减少我们修改后刷新页面的频率，热加载有很多中，分为是demo页html的修改后的热加载，css样式的热加载，js修改的热加载。
 
-针对js和css热加载，这里使用了webpack的webpack-dev-middleware和webpack-hot-middleware中间件
+**针对js和css热加载，这里使用了webpack的webpack-dev-middleware和webpack-hot-middleware中间件**
 
 ```
 let webpack = require('webpack'),
@@ -365,7 +355,7 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 ```
 
-html修改后的热加载，我们使用了browser-sync插件，当我们修改demo中的html文件后，能够自动刷新浏览器，browser-sync会创建一个应用代理，代理来监听静态文件的修改
+**html修改后的热加载，我们使用了browser-sync插件，当我们修改demo中的html文件后，能够自动刷新浏览器，browser-sync会创建一个应用代理，代理来监听静态文件的修改**
 
 ```
 let browserSync = require('browser-sync').create();
@@ -393,7 +383,7 @@ app.listen(defaults.defaultPort, function() {
 
 异步加载方案使用了es7语法，使用了babel-polyfill垫片，使用babel-resets-es2015代码编译为es5
 
-通过async import新语法实现优雅的异步加载写法，有点像同步的写法。
+**通过async import新语法实现优雅的异步加载写法，有点像同步的写法。**
 
 ```
 import 'babel-polyfill';
